@@ -3,7 +3,7 @@ from django.utils.text import slugify
 
 class News(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=200)
+    slug = models.CharField(max_length=200, unique=True)
     anons = models.CharField(max_length=100)
     full_text = models.TextField()
     date = models.CharField(max_length=10)
@@ -22,7 +22,7 @@ class News(models.Model):
     
 class Projects(models.Model):
     name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=200)
+    slug = models.CharField(max_length=200, unique=True)
     country = models.CharField(max_length=100)
     full_text = models.TextField()
     MainImage = models.ImageField(upload_to='media/project')

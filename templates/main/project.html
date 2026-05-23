@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{title}}{% endblock title %}
+
+{% block content %}
+{% include "components/theme.html" %}
+
+<div class="site-section">
+  <div class="container">
+    <div class="row align-items-start"> 
+      
+      {% for el in project %}
+        <div class="{% cycle 'col-lg-7' 'col-lg-5 pt-lg-5' 'col-lg-5' 'col-lg-7 pt-lg-5' %} mb-5" data-aos="fade-up" data-aos-delay="{% cycle '' '100' '' '100' %}">
+          <div class="media-02819">
+            <a href="{% url 'project-detail' slug=el.slug %}" class="img-link">
+              <img src="{{el.MainImage.url}}" alt="{{el.name}}" class="img-fluid rounded">
+            </a>
+            <h3 class="mt-3">
+              <a href="{% url 'project-detail' slug=el.slug %}" class="text-decoration-none">{{el.name}}</a>
+            </h3>
+            <span class="text-muted">{{el.country}}</span>
+          </div>
+        </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+{% endblock content %}

@@ -22,13 +22,13 @@
                 {{ el.name }}
               </span>
               <h5 class="card-title my-3">
-                <a href="#" class="text-dark font-weight-bold text-decoration-none hover-link" style="line-height: 1.4;">
+                <a href="{% url "news-detail" slug=el.slug %}" class="text-dark font-weight-bold text-decoration-none hover-link" style="line-height: 1.4;">
                   {{ el.anons }}
                 </a>
               </h5>
             </div>
             <p class="mb-0 mt-4">
-              <a href="#" class="text-primary font-weight-bold text-decoration-none d-inline-flex align-items-center dynamic-arrow">
+              <a href="{% url "news-detail" slug=el.slug %}" class="text-primary font-weight-bold text-decoration-none d-inline-flex align-items-center dynamic-arrow">
                 Читать далее <span class="ml-2" style="transition: transform 0.2s;">&rarr;</span>
               </a>
             </p>

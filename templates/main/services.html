@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{settings.title}}{% endblock title %}
+{% block content %}
+  {% include "components/theme.html" %}
+  {% include "components/poster.html" %}
+  {% include "components/credit.html" %}
+{% endblock content %}

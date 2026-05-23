@@ -1630,6 +1630,41 @@ h1, h2, h3, h4, h5,
   transform: translate(-50%, -50%);
   max-width: 500px; }
 
+.box-990099 {
+  z-index: 2;
+  background: #fff;
+  padding: 4rem;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  width: 90%;
+  max-width: 850px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-radius: 8px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.box-990099 div {
+  max-width: 650px;
+  margin: 0 auto;
+  text-align: left;
+  word-break: break-word;
+}
+
+.box-990099 h1, 
+.box-990099 .text-muted {
+  text-align: center;
+}
+
+
+
+
+
+
 .media-02819 {
   margin-bottom: 60px; }
   .media-02819 .small {
