@@ -1,6 +1,8 @@
-from django.shortcuts import render
-from django.views.generic import TemplateView, ListView, DetailView
+from django.views.generic import TemplateView, ListView, DetailView, FormView
 from .models import News, Projects
+from .forms import FormLatter
+from django.core.mail import EmailMessage
+from django.urls import reverse_lazy
 
 class IndexView(TemplateView):
     template_name = 'index.html'
@@ -34,7 +36,7 @@ class AboutView(TemplateView):
         }
         return context
 
-class ContactView(TemplateView):
+"""class ContactView(TemplateView):
     template_name = 'main/contact.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -43,6 +45,46 @@ class ContactView(TemplateView):
             'title' : 'Контакты',
             'theme' :'Наши контакты',
             'text': 'здесь вы сможете отправить нам свое письмо',
+        }
+        return context"""
+    
+class ContactView(FormView):
+    template_name = 'main/contact.html'
+    form_class = FormLatter
+    success_url = reverse_lazy('success.html')
+    
+    def form_valid(self, form):
+        subname = form.cleaned_data.get('name')
+        subsurname = form.cleaned_data.get('surname')
+        subemail = form.cleaned_data.get('email')
+        subtext = form.cleaned_data.get('text')
+        
+        subfullname = f"{subname} {subsurname}"
+        emailsubject = f"Обратная связь: письмо от {subfullname}"
+        emailmessage = (
+            f"Вам пришло новое сообщение с сайта!\n\n"
+            f"Отправитель: {subfullname}\n"
+            f"Email для связи: {subemail}\n\n"
+            f"Текст сообщения:\n{subtext}"
+        )
+        
+        mail = EmailMessage(
+            subject=emailsubject,
+            body=emailmessage,
+            from_email='noreply@mysite.com', # Технический email вашего сайта (из settings.py)
+            to=['my-email@example.com'],      # Ваша личная/рабочая почта, куда придет письмо
+            reply_to=[subemail],              # СЮДА передаем почту пользователя!
+        )
+        
+        mail.send(fail_silently=False)
+        return super().form_valid(form)
+        
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['settings'] = {
+            'title':'Контакты',
+            'theme':'Наши контакты',
+            'text':'Здесь вы можете отправить нам свое письмо'
         }
         return context
 
@@ -55,7 +97,17 @@ class ErrorView(TemplateView,):
             'title' : 'Ошибка',
         }
         return context
-
+    
+class SuccessView(TemplateView):
+    template_name = 'success.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        
+        context['settings'] = {
+            'title' : 'Успех',
+        }
+        return context
+    
 class ServicesView(TemplateView):
     template_name = 'main/services.html'
     def get_context_data(self, **kwargs):
@@ -72,7 +124,7 @@ class ProjectView(ListView):
     template_name = 'main/project.html'
     model = Projects
     context_object_name = 'project'
-    aginate_by = 4
+    paginate_by = 4
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         

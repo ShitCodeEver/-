@@ -12,7 +12,8 @@ urlpatterns = [
     path('blog/', views.BlogView.as_view(), name='blog'),
     path('error/', views.ErrorView.as_view(), name='error'),
     path('project/<slug:slug>/', views.ProjectDetailView.as_view(), name='project-detail'),
-    path('news/<slug:slug>/', views.NewsDetailView.as_view(), name='news-detail')
+    path('news/<slug:slug>/', views.NewsDetailView.as_view(), name='news-detail'),
+    path('success/', views.SuccessView.as_view(), name='success')
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

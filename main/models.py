@@ -25,7 +25,7 @@ class Projects(models.Model):
     slug = models.CharField(max_length=200, unique=True)
     country = models.CharField(max_length=100)
     full_text = models.TextField()
-    MainImage = models.ImageField(upload_to='media/project')
+    MainImage = models.ImageField(upload_to='project/')
     
     class Meta:
         verbose_name = 'Проект'
@@ -41,6 +41,6 @@ class Projects(models.Model):
     
 class ImageProject(models.Model):
     project = models.ForeignKey(Projects, on_delete=models.CASCADE, related_name='images')
-    image = models.ImageField(upload_to='media/other')
+    image = models.ImageField(upload_to='other/')
     
 # Create your models here.

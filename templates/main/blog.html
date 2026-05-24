@@ -2,16 +2,15 @@
 {% load static %}
 {% block title %}{{settings.title}}{% endblock title %}
 {% block content %}
-  {% include "components/theme.html" %}
+{% include "components/theme.html" %}
 <div class="site-section bg-light py-5">
   <div class="container">
     <div class="row mb-5">
       <div class="col-md-7">
-        <h2 class="heading-39291">Blog and Updates</h2>
-        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto quos veniam magni totam, architecto earum dolor id obcaecati!</p>
+        <h2 class="heading-39291">Новости и обновления</h2>
+        <p class="text-muted">Сама по себе боль очень важна, она связана с ростом клиента. Я прихожу к ним с большими затратами, строитель этих болей ослеплен!</p>
       </div>
     </div>
-
     <div class="row align-items-stretch">
       {% for el in News %}
       <div class="col-lg-3 col-md-6 mb-4">
@@ -37,52 +36,37 @@
       </div>
       {% endfor %} 
     </div>
-    <!-- Начало блока пагинации. Он появится только если страниц больше 1 -->
     {% if is_paginated %}
     <div class="row mt-5">
       <div class="col-12 d-flex justify-content-center">
         <nav aria-label="Навигация по страницам">
           <ul class="pagination pagination-md shadow-sm mb-0" style="border-radius: 0.25rem; overflow: hidden;">
-            
-            <!-- КНОПКА "НАЗАД" -->
             {% if page_obj.has_previous %}
               <li class="page-item">
                 <a class="page-link text-dark font-weight-bold px-3 py-2" href="?page={{ page_obj.previous_page_number }}" aria-label="Предыдущая">&laquo;</a>
               </li>
             {% endif %}
-
-            <!-- ЦИКЛ ВЫВОДА ЦИФР СТРАНИЦ -->
             {% for num in page_obj.paginator.page_range %}
               {% if page_obj.number == num %}
-                <!-- Текущая активная страница (зелёная) -->
                 <li class="page-item active">
                   <span class="page-link text-white font-weight-bold px-3 py-2" style="background-color: #1abc9c; border-color: #1abc9c;">{{ num }}</span>
                 </li>
               {% else %}
-                <!-- Остальные страницы (ссылки) -->
                 <li class="page-item">
                   <a class="page-link text-dark font-weight-bold px-3 py-2" href="?page={{ num }}">{{ num }}</a>
                 </li>
               {% endif %}
             {% endfor %}
-
-            <!-- КНОПКА "ВПЕРЕД" -->
             {% if page_obj.has_next %}
               <li class="page-item">
                 <a class="page-link text-dark font-weight-bold px-3 py-2" href="?page={{ page_obj.next_page_number }}" aria-label="Следующая">&raquo;</a>
               </li>
             {% endif %}
-
           </ul>
         </nav>
       </div>
     </div>
     {% endif %}
-    <!-- Конец блока пагинации -->
-
   </div>
 </div>
-
-
-
 {% endblock content %}

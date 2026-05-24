@@ -2,5 +2,51 @@
 {% load static %}
 {% block title %}{{project.name}}{% endblock title %}
 {% block content %}
+<div class="container my-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-xl-7">
+      <div class="project-main-block bg-white p-4 p-md-5 shadow-sm rounded-lg mb-4">
+        <div class="project-hero-image mb-4">
+          <div class="ftco-cover-1 rounded" style="background-image: url('{% static 'images/hero_1.jpg' %}'); height: 450px; background-size: cover; background-position: center;"></div>
+        </div>
+        <div class="project-info text-center mt-4">
+          <h1 class="text-uppercase font-weight-bold display-4 mb-2" style="letter-spacing: 2px;">{{ project.name }}</h1>
+          <p class="font-weight-bold text-muted text-uppercase small mb-4" style="letter-spacing: 3px;">{{ project.country }}</p>
+          <div class="mx-auto" style="max-width: 500px;">
+            <p class="lead text-secondary" style="white-space: pre-line; line-height: 1.8; word-break: break-word;">{{ project.full_text }}</p>
+          </div>
+        </div>
+      </div>
+      {% if project.images.all %}
+      <div class="project-gallery-wrapper bg-white p-4 shadow-sm rounded-lg">
+        <h3 class="h6 text-uppercase font-weight-bold text-muted mb-4 text-center" style="letter-spacing: 1px;">Галерея проекта</h3>
+        <div class="row no-gutters custom-grid-gallery">
+          {% for img in project.images.all %}
+          <div class="col-6 p-2"> 
+            <div class="gallery-thumb rounded hover-zoom" style="background-image: url('{{ img.image.url }}');"></div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+    </div>
+  </div>
+</div>
+
+<style>
+  .gallery-thumb {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  .hover-zoom:hover {
+    transform: scale(1.03);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+</style>
 
 {% endblock content %}
