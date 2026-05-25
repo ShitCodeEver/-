@@ -2,6 +2,7 @@ from django.views.generic import TemplateView, ListView, DetailView, FormView
 from .models import News, Projects
 from .forms import FormLatter
 from django.core.mail import EmailMessage
+from django.conf import settings
 from django.urls import reverse_lazy
 
 class IndexView(TemplateView):
@@ -51,29 +52,29 @@ class AboutView(TemplateView):
 class ContactView(FormView):
     template_name = 'main/contact.html'
     form_class = FormLatter
-    success_url = reverse_lazy('success.html')
+    success_url = reverse_lazy('success')
     
     def form_valid(self, form):
-        subname = form.cleaned_data.get('name')
-        subsurname = form.cleaned_data.get('surname')
-        subemail = form.cleaned_data.get('email')
-        subtext = form.cleaned_data.get('text')
+        sub_name = form.cleaned_data.get('name')
+        sub_surname = form.cleaned_data.get('surname')
+        sub_email = form.cleaned_data.get('email')
+        sub_text = form.cleaned_data.get('text')
         
-        subfullname = f"{subname} {subsurname}"
-        emailsubject = f"Обратная связь: письмо от {subfullname}"
+        sub_full_name = f"{sub_name} {sub_surname}"
+        email_subject = f"Обратная связь: письмо от {sub_full_name}"
         emailmessage = (
             f"Вам пришло новое сообщение с сайта!\n\n"
-            f"Отправитель: {subfullname}\n"
-            f"Email для связи: {subemail}\n\n"
-            f"Текст сообщения:\n{subtext}"
+            f"Отправитель: {sub_full_name}\n"
+            f"Email для связи: {sub_email}\n\n"
+            f"Текст сообщения:\n{sub_text}"
         )
         
         mail = EmailMessage(
-            subject=emailsubject,
+            subject=email_subject,
             body=emailmessage,
-            from_email='noreply@mysite.com', # Технический email вашего сайта (из settings.py)
-            to=['my-email@example.com'],      # Ваша личная/рабочая почта, куда придет письмо
-            reply_to=[subemail],              # СЮДА передаем почту пользователя!
+            from_email=settings.EMAIL_HOST_USER,
+            to=[settings.EMAIL_HOST_USER],
+            reply_to=[sub_email],
         )
         
         mail.send(fail_silently=False)
@@ -99,12 +100,14 @@ class ErrorView(TemplateView,):
         return context
     
 class SuccessView(TemplateView):
-    template_name = 'success.html'
+    template_name = 'main/success.html'
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
         context['settings'] = {
             'title' : 'Успех',
+            'theme':'Письмо отправлено',
+            'text':'Вы успешно Отправили письмо'
         }
         return context
     
